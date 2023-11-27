@@ -36,6 +36,7 @@
                       <div class="img-box">
                          <div class="img_box-inner">
                             <img src="images/client.jpg" alt="">
+
                          </div>
                       </div>
                    </div>

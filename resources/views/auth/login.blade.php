@@ -1,9 +1,9 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img width="179" src="images/logo.png" alt="#" />
         </x-slot>
-
+        {{-- <a class="navbar-brand" href="{{url('/')}}"><img width="179" src="images/logo.png" alt="#" /></a> --}}
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))

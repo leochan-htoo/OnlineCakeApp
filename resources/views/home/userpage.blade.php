@@ -35,7 +35,7 @@
       <!-- end why section -->
 
       <!-- arrival section -->
-      @include('home.new_arival')
+
       <!-- end arrival section -->
 
       <!-- product section -->
@@ -43,7 +43,7 @@
       <!-- end product section -->
 
       <!-- subscribe section -->
-      @include('home.subscribe')
+
       <!-- end subscribe section -->
       <!-- client section -->
       @include('home.client')
