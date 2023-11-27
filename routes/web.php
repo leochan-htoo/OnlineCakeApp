@@ -62,3 +62,6 @@ route::get('/product_details/{id}', [HomeController::class,'product_details']);
 
 // add this route for adding product to the cart
 route::post('/add_cart/{id}', [HomeController::class,'add_cart']);
+
+// add this route for show product to the cart
+route::get('/show_cart', [HomeController::class,'show_cart']);

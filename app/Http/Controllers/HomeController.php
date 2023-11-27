@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         // can limit data product category in user viewpage "$product=Product::paginate(10);"
-        $product=Product::paginate(6);
+        $product=Product::paginate(10);
         return view('home.userpage', compact('product'));
     }
     public function redirect()
@@ -28,7 +28,7 @@ class HomeController extends Controller
         else
         {
             // use the same product of home.userpage to view product
-            $product=Product::paginate(6);
+            $product=Product::paginate(10);
         return view('home.userpage', compact('product'));
         }
     }
@@ -82,5 +82,34 @@ class HomeController extends Controller
                 return redirect('login');
             }
     }
+    //this function will show cart notification sign after user add card
+    //use this logic function "$id=Auth::user()->id;" makesure to know user
+    //authticate user add cart after login
+    public function show_cart()
+    {
+        //use "if(Auth::id())" to check which user is auth adding cart
+        if(Auth::id())
+        {
+                $id=Auth::user()->id;
+            $cart=cart::where('user_id','=',$id)->get();
+            return view('home.showcart', compact('cart'));
+        }
+        // if no user login authenticate will require to login page
+        else
+        {
+            return redirect('login');
+        }
+
+    }
+    //this function will remove product after adding product in package cart
+    public function remove_cart($id)
+    {
+        $cart=cart::find($id);
+
+        $cart->delete();
+
+        return redirect()->back();
+    }
+
 
 }

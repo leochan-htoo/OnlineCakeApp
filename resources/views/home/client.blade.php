@@ -25,7 +25,7 @@
                          Customer
                       </h6>
                       <p>
-                        "In the world of bread and pastries, magic happens." "Indulging in the simplicity and beauty of freshly baked goodness."
+                        "May your birthday be as sweet and delicious as cake!"
                       </p>
                    </div>
                 </div>
@@ -35,7 +35,7 @@
                    <div class="img_container">
                       <div class="img-box">
                          <div class="img_box-inner">
-                            <img src="images/client.jpg" alt="">
+                            <img src="images/client1.jpg" alt="">
 
                          </div>
                       </div>
@@ -48,7 +48,7 @@
                          Customer
                       </h6>
                       <p>
-                         Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+                        "Cake fixes everything, and it's your birthday. So I foresee everything going right for you today!"
                       </p>
                    </div>
                 </div>
@@ -58,19 +58,19 @@
                    <div class="img_container">
                       <div class="img-box">
                          <div class="img_box-inner">
-                            <img src="images/client.jpg" alt="">
+                            <img src="images/client1.jpg" alt="">
                          </div>
                       </div>
                    </div>
                    <div class="detail-box">
                       <h5>
-                         Anna Trevor
+                         Leo Cake
                       </h5>
                       <h6>
                          Customer
                       </h6>
                       <p>
-                         Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+                        "Cakes are special. Every birthday, every celebration ends with something sweet, a cake, and people remember.
                       </p>
                    </div>
                 </div>
