@@ -34,6 +34,14 @@
       table,th,td
       {
         border:2px solid rgb(0, 0, 0);
+        text-align: center;
+
+      }
+      table
+      {
+        padding: 0 90px 0 100px;
+        width: 80%;
+        margin: auto;
       }
 
       .th_deg
@@ -44,15 +52,21 @@
       }
       .img_deg
       {
-        height: 96px;
+        height: 100px;
         width: 100px;
 
       }
       .total_deg
       {
         font-size: 20px;
-        padding: 40px;
+        padding: 50px 0 0 200px;
       }
+      /* Add a class to the specific td element you want to remove the border from */
+        .no-border
+        {
+            border: none;
+        }
+
 
       </style>
 
@@ -67,7 +81,7 @@
          <!-- end slider section -->
 
 
-      <div class="center">
+      <div class="">
         <table>
             <tr>
                 <th class="th_deg">Product title</th>
@@ -93,12 +107,18 @@
                 </tr>
                 <?php $totalprice=$totalprice + $cart->price ?>
             @endforeach
+            <tr>
+                <td class="no-border"></td>
+                <td class="no-border"></td>
+                <td class="no-border"><h1 class="">Total Price: {{$totalprice}}BTH</h1></td>
+                <td class="no-border"></td>
+                <td class="no-border"></td>
+            </tr>
+
 
         </table>
 
-        <div>
-            <h1 class="total_deg">Total Price: {{$totalprice}}BTH</h1>
-        </div>
+
 
       </div>
 

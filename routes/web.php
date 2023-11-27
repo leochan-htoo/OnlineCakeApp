@@ -65,3 +65,6 @@ route::post('/add_cart/{id}', [HomeController::class,'add_cart']);
 
 // add this route for show product to the cart
 route::get('/show_cart', [HomeController::class,'show_cart']);
+
+// add this route for remove after user add into cart adding
+route::get('/remove_cart/{id}', [HomeController::class,'remove_cart']);
