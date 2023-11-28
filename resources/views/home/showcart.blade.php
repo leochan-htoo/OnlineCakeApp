@@ -67,6 +67,29 @@
             border: none;
         }
 
+        .order-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .order-section h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .order-section .payment-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .order-section .payment-buttons .btn {
+    margin: 0 5px;
+  }
+
 
       </style>
 
@@ -102,7 +125,7 @@
                     <td><img class="img_deg" src="/product/{{$cart->image}}" alt=""></td>
                         <td>
                             {{-- add this onclick="return confirm warning first poshup to bar of navbar before to remove --}}
-                            <a class="btn btn-danger" onclick="return confirm('Are you sure to remove this product')" href="{{url('/remove_cart',$cart->id)}}">Remove</a>
+                            <a class="btn btn-danger" onclick="return confirm('Are you sure to remove this product?')" href="{{url('/remove_cart',$cart->id)}}">Remove</a>
                         </td>
                 </tr>
                 <?php $totalprice=$totalprice + $cart->price ?>
@@ -118,7 +141,23 @@
 
         </table>
 
+        <div class="order-section">
+            <table>
+              <!-- Table rows omitted for brevity -->
+            </table>
 
+            <div>
+              <h1>Total Price: {{$totalprice}}BTH</h1>
+            </div>
+
+            <div class="proceed-section">
+              <h1>Proceed to Order</h1>
+              <div class="payment-buttons">
+                <a href="{{url('cash_order')}}" class="btn btn-danger">Cash On Delivery</a>
+                <a href="" class="btn btn-danger">Pay Using Card</a>
+              </div>
+            </div>
+          </div>
 
       </div>
 

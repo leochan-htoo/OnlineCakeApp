@@ -68,3 +68,12 @@ route::get('/show_cart', [HomeController::class,'show_cart']);
 
 // add this route for remove after user add into cart adding
 route::get('/remove_cart/{id}', [HomeController::class,'remove_cart']);
+
+// add this route for link href link to product page
+Route::get('/product', function () {
+    return view('product');
+});
+
+route::get('/cash_order', [HomeController::class,'cash_order']);
+
+
