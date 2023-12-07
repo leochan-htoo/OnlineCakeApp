@@ -2,7 +2,7 @@
 <html>
 <head>
     {{-- // add this "<base href="/public">" for css will working properly for view --}}
-    <base href="/public">
+    {{-- <base href="/public"> --}}
 
     <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -17,17 +17,18 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="shortcut icon" href="images/logo.png" type="">
-    <title>Online Bakery Shop System</title>
+    <link rel="shortcut icon" href="{{asset('images/logo.png')}}" type="">
+    <title>Online Cake Shop </title>
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('home/css/bootstrap.css')}}" />
     <!-- font awesome style -->
-    <link href="home/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{asset('home/css/font-awesome.min.css')}}" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="home/css/style.css" rel="stylesheet" />
+    <link href="{{asset('home/css/style.css')}}" rel="stylesheet" />
     <!-- responsive style -->
-    <link href="home/css/responsive.css" rel="stylesheet" />
+    <link href="{{asset('home/css/responsive.css')}}" rel="stylesheet" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <style>
         .cart-icon {
@@ -154,6 +155,15 @@
     </div>
 
 </div>
+<script src="{{asset('home/js/jquery-3.4.1.min.js')}}"></script>
+      <!-- popper js -->
+      <script src="{{asset('home/js/popper.min.js')}}"></script>
+      <!-- bootstrap js -->
+      <script src="{{asset('home/js/bootstrap.js')}}"></script>
+      <!-- custom js -->
+      <script src="{{asset('home/js/custom.js')}}"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
@@ -226,5 +236,7 @@ $(function() {
     }
 
 });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </html>
