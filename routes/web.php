@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +31,10 @@ Route::middleware([
 // add this route for view redirect admin panel dashboard in admin
 route::get('/redirect', [HomeController::class,'redirect']);
 
+// route::get('/productview', [HomeController::class,'productview']);
+
+
+//**************************** Admin panel AdminController**********************************// -
 // add this route for view catagory in admin
 route::get('/view_catagory', [AdminController::class,'view_catagory']);
 
@@ -57,7 +63,24 @@ route::get('/update_product/{id}', [AdminController::class,'update_product']);
 // add this route for update to edit in database table
 route::post('/update_product_confirm/{id}', [AdminController::class,'update_product_confirm']);
 
+// add this route for show user order in admin panel
+route::get('/order', [AdminController::class,'order']);
 
+// add this route for show user delivery in admin panel
+route::get('/delivered/{id}', [AdminController::class,'delivered']);
+
+// add this route for print_pdf of user customer make order in admin panel
+route::get('/print_pdf/{id}', [AdminController::class,'print_pdf']);
+
+// add this route for search product data in admin panel
+route::get('/search', [AdminController::class,'searchdata']);
+
+
+
+
+
+
+//**************************** User HomeController**********************************// -
 
 
 // add this route for show product details
@@ -105,6 +128,4 @@ route::get('/product_search',[HomeController::class,'product_search']);
 route::get('/products',[HomeController::class,'product']);
 
 route::get('/search_product',[HomeController::class,'search_product']);
-
-
 
