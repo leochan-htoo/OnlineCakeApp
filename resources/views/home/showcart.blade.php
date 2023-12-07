@@ -10,8 +10,8 @@
       <meta name="keywords" content="" />
       <meta name="description" content="" />
       <meta name="author" content="" />
-      <link rel="shortcut icon" href="images/favicon.png" type="">
-      <title>Famms - Fashion HTML Template</title>
+      <link rel="shortcut icon" href="images/logo.png" type="">
+      <title>Online Bakery Shop System</title>
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
       <!-- font awesome style -->
@@ -22,6 +22,26 @@
       <link href="home/css/responsive.css" rel="stylesheet" />
 
       <style type="text/css">
+
+        /* Custom styles for the cart icon and count */
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        #cartCount {
+            position: absolute;
+            top: -10px; /* Adjust the top position to move the number higher */
+            right: 5px;
+            background-color: red; /* Customize the background color */
+            color: white; /* Customize the text color */
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-size: 10px
+
+        }
+
 
       .center
       {
@@ -46,9 +66,9 @@
 
       .th_deg
       {
-        font-size:30px;
-        padding: 5px;
-        background: rgb(41, 234, 41);
+        font-size:20px;
+        padding: 4px;
+        background: rgb(181, 186, 208);
       }
       .img_deg
       {
@@ -135,8 +155,14 @@
                 <tr>
                     <td>{{$cart->product_title}}</td>
                     <td>{{$cart->quantity}}</td>
-                    <td>{{$cart->price}}BTH</td>
-                    <td><img class="img_deg" src="/product/{{$cart->image}}" alt=""></td>
+                    <td>{{$cart->price}} THB</td>
+
+                    <td style="text-align: center; vertical-align: middle;">
+                        <div style="display: flex; justify-content: center;">
+                            <img class="img_deg" src="/product/{{$cart->image}}" alt="">
+                        </div>
+                    </td>
+
                         <td>
                             {{-- add this onclick="return confirm warning first poshup to bar of navbar before to remove --}}
                             <a class="btn btn-danger" onclick="return confirm('Are you sure to remove this product?')" href="{{url('/remove_cart',$cart->id)}}">Remove</a>
@@ -147,7 +173,7 @@
             <tr>
                 <td class="no-border"></td>
                 <td class="no-border"></td>
-                <td class="no-border"><h1 class="">Total Price: {{$totalprice}}BTH</h1></td>
+                <td class="no-border"><h1 class="">Total Price: {{$totalprice}} THB</h1></td>
                 <td class="no-border"></td>
                 <td class="no-border"></td>
             </tr>
@@ -161,14 +187,14 @@
             </table>
 
             <div>
-              <h1>Total Price: {{$totalprice}}BTH</h1>
+              <h1>Total Price: {{$totalprice}} THB</h1>
             </div>
 
             <div class="proceed-section">
               <h1>Proceed to Order</h1>
               <div class="payment-buttons">
                 <a href="{{url('cash_order')}}" class="btn btn-danger">Cash On Delivery</a>
-                <a href="" class="btn btn-danger">Pay Using Card</a>
+                <a href="{{url('stripe',$totalprice)}}" class="btn btn-danger">Pay Using Card</a>
               </div>
             </div>
           </div>

@@ -8,6 +8,10 @@ use App\Models\Category;
 
 use App\Models\Product;
 
+use App\Models\Order;
+
+
+use PDF;
 
 class AdminController extends Controller
 
@@ -113,10 +117,44 @@ class AdminController extends Controller
             $product->image=$imagename;
         }
 
-
-
         $product->save();
 
         return redirect()->back()->with('message','Product Updated Successfully');
     }
+    public function order()
+    {
+      $order=order::all();
+        return view('admin.order',compact('order'));
+    }
+    //create this controller function logic for delivered
+    public function delivered($id)
+    {
+       $order=order::find($id);
+       $order->delivery_status="delivered";
+       $order->payment_status='Paid';
+
+       $order->save();
+
+       return redirect()->back();
+
+    }
+
+    // create this controller function logic for print pdf of user make order receit
+    public function print_pdf($id)
+    {
+        $order=order::find($id);
+        $pdf=PDF::loadView('admin.pdf',compact('order'));
+        return $pdf->download('order_details.pdf');
+    }
+
+    //create this controller function logic for search product data
+    public function searchdata(Request $request)
+{
+    $searchText = $request->search;
+    $order = Order::where('name', 'LIKE', '%' . $searchText . '%')->orWhere('phone', 'LIKE', '%' . $searchText . '%')
+    ->orWhere('product_title', 'LIKE', '%' . $searchText . '%')->get();
+
+    return view('admin.order', compact('order'));
+}
+
 }

@@ -46,21 +46,8 @@
       <div class="hero_area">
          <!-- header section strats -->
             @include('home.header')
-         <!-- end header section -->
-         <!-- slider section -->
-         @include('home.slider')
-         <!-- end slider section -->
-      </div>
-      <!-- why section -->
 
-      <!-- end why section -->
-
-      <!-- arrival section -->
-
-      <!-- end arrival section -->
-
-      <!-- product section -->
-      @include('home.product')
+      @include('home.product_view')
       <!-- end product section -->
 
       {{-- comment and reply system start here --}}
