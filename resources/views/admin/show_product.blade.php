@@ -90,8 +90,9 @@
                             <td>{{$product->category}}</td>
                             <td>{{$product->price}}</td>
                             <td>{{$product->discount_price}}</td>
-                            <td>
-                               <img src="/product/{{$product->image}}" width="150" height="150">
+
+                            <td style="display: flex; justify-content: center;">
+                                <img src="/product/{{$product->image}}" width="150" height="150">
                             </td>
 
                             <td>
