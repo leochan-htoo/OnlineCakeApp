@@ -9,18 +9,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-        <link rel="shortcut icon" href="images/logo.png" type="">
-        <title>Famms - Fashion HTML Template</title>
-        <!-- bootstrap core css -->
-        <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
-        <!-- font awesome style -->
-        <link href="home/css/font-awesome.min.css" rel="stylesheet" />
-        <!-- Custom styles for this template -->
-        <link href="home/css/style.css" rel="stylesheet" />
-        <!-- responsive style -->
-        <link href="home/css/responsive.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/logo.png" type="">
+    <title>Online Bakery Shop System</title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
+    <!-- font awesome style -->
+    <link href="home/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="home/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="home/css/responsive.css" rel="stylesheet" />
 
-        <style type="text/css">
+
+        <style>
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        #cartCount {
+            position: absolute;
+            top: -10px; /* Adjust the top position to move the number higher */
+            right: 5px;
+            background-color: red; /* Customize the background color */
+            color: white; /* Customize the text color */
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-size: 10px
+
+        }
 
             .containers {
             display: flex;
@@ -39,6 +65,8 @@
     <div class="hero_area">
         <!-- header section strats -->
         <span style="font-size: 16px;">@include('home.header')</span>
+
+        <!-- end header section -->
 
 
 
