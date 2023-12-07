@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!-- add <base href="/public"> for css will working properly for view  -->
-    <base href="/public">
+    {{-- <base href="/public"> --}}
     @include('admin.css')
 
     <style type="text/css">
