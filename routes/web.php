@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
-
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +29,7 @@ Route::middleware([
 });
 
 // add this route for view redirect admin panel dashboard in admin
-route::get('/redirect', [HomeController::class,'redirect']);
-
-// route::get('/productview', [HomeController::class,'productview']);
+route::get('/redirect', [HomeController::class,'redirect'])->middleware('auth','verified');
 
 
 //**************************** Admin panel AdminController**********************************// -
