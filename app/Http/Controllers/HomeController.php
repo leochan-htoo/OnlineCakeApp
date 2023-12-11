@@ -79,7 +79,7 @@ class HomeController extends Controller
                 $totalQuantity = Cart::where('user_id', $userId)->count();
 
                 // Use the same product of home.userpage to view product
-                $product = Product::paginate(10);
+                $product = Product::paginate(6);
                 // use this for comment defined
                 $comment=comment::orderby('id','desc')->get();
                 $reply=reply::all();
