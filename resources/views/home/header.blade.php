@@ -16,13 +16,6 @@
                    <a class="nav-link" href="{{url('products')}}">Products <span class="sr-only">(current)</span></a>
                 </li>
 
-                {{-- <li class="nav-item">
-                   <a class="nav-link" href="blog_list.html">Blog</a>
-                </li> --}}
-                <li class="nav-item">
-                   <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-
 
                 <li class="nav-item ">
                     <a class="nav-link" href="{{url('show_order')}}">Order <span class="sr-only">(current)</span></a>
