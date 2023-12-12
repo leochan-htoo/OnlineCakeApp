@@ -259,6 +259,7 @@ public function stripePost(Request $request, $totalprice)
     // stripe_secret API key is set up in env
     \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
+
     \Stripe\Charge::create([
         "amount" => $totalprice * 100,
         "currency" => "thb",
