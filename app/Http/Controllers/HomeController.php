@@ -301,7 +301,7 @@ public function stripePost(Request $request, $totalprice)
         // This function logic is for view product for user
         public function product()
             {
-                $product=Product::paginate(10);
+                $product=Product::paginate(6);
 
                 $userId = Auth::user()->id;
 

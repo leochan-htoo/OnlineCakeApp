@@ -21,9 +21,7 @@
                     <a class="nav-link" href="{{url('show_order')}}">Order <span class="sr-only">(current)</span></a>
                  </li>
 
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{url('show_cart')}}">Cart</a>
-                 </li> --}}
+
                  @auth
                  <li class="nav-item">
                     <a class="nav-link cart-icon" href="{{url('show_cart')}}">
@@ -93,9 +91,9 @@
                 @if (Route::has('login'))
 
                 @auth
-                <x-app-layout>
+                    <x-app-layout>
 
-                </x-app-layout>
+                    </x-app-layout>
                         @else
                             <li class="nav-item">
                                     <a class="btn btn-primary" id="logincss" href="{{ route('login') }}">Login</a>

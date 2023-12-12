@@ -11,7 +11,7 @@
       <meta name="keywords" content="" />
       <meta name="description" content="" />
       <meta name="author" content="" />
-      <link rel="shortcut icon" href="images/favicon.png" type="">
+      <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="">
       <title>Online Cake App</title>
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="{{asset('home/css/bootstrap.css')}}" />
@@ -56,19 +56,11 @@
          @include('home.slider')
          <!-- end slider section -->
       </div>
-      <!-- why section -->
 
-      <!-- end why section -->
-
-      <!-- arrival section -->
-
-      <!-- end arrival section -->
-
-      <!-- product section -->
       @include('home.product')
       <!-- end product section -->
 
-      {{-- comment and reply system start here --}}
+
 
         <div style="text-align: center; padding-bottom: 30px;">
             <h1 style="font-size: 30px; text-align: center; padding-top: 20px; padding-bottom: 20px;">
@@ -133,22 +125,15 @@
 
         </div>
 
-
-      {{-- comment and reply system end here --}}
-
-      <!-- subscribe section -->
-
-      <!-- end subscribe section -->
-      <!-- client section -->
       @include('home.client')
       <!-- end client section -->
       <!-- footer start -->
 
       <!-- footer end -->
       <div class="cpy_">
-         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
+         <p class="mx-auto">© 2023 All Rights Reserved By <a href="https://onlinecake.kanyawitguys.tech">Online Cake App</a><br>
 
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+            Distributed By <a href="https://onlinecake.kanyawitguys.tech" target="_blank">OnlineCake</a>
 
          </p>
       </div>

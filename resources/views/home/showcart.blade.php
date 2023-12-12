@@ -205,12 +205,13 @@
       @include('home.footer')
       <!-- footer end -->
       <div class="cpy_">
-         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
+        <p class="mx-auto">© 2023 All Rights Reserved By <a href="https://onlinecake.kanyawitguys.tech">Online Cake App</a><br>
 
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+           Distributed By <a href="https://onlinecake.kanyawitguys.tech" target="_blank">OnlineCake</a>
 
-         </p>
-      </div>
+        </p>
+     </div>
+     </div>
       <!-- jQery -->
       <script src="home/js/jquery-3.4.1.min.js"></script>
       <!-- popper js -->
