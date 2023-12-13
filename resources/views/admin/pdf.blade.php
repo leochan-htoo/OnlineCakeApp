@@ -7,8 +7,24 @@
     <title>Order PDF</title>
 </head>
 <body>
+
     <h1>Order Details</h1>
 
+    <style>
+        table {
+        width: 60%; /* Set the table width to 50% of the parent container */
+        margin: 0 auto; /* Center the table horizontally */
+        border-collapse: collapse; /* Collapse the border spacing */
+    }
+
+    td {
+        text-align: center; /* Center the content within each table cell */
+        padding: 4px; /* Adjusted padding for better appearance */
+        border: 1px solid #000; /* Add a border to the cells for better visibility */
+    }
+    </style>
+
+    <div style="text-align: center;">
     <table border="1">
         <tr>
             <td>Customer Name:</td>
@@ -52,8 +68,11 @@
         </tr>
     </table>
 
+
+
     <br><br>
-    <img height="250" width="450" src="product/{{$order->image}}" alt="">
+    <img height="159" width="159" src="product/{{$order->image}}" alt="">
+    </div>
 </body>
 
 </html>
