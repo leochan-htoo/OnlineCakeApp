@@ -38,21 +38,33 @@
                             <a href="{{ url('product_details', $products->id) }}" class="option1">
                                 Product Detail
                             </a>
-                            <form action="{{url('add_cart', $products->id)}}" method="Post">
+                            <form id="addToCartForm" action="{{ url('add_cart', $products->id) }}" method="post">
                                 @csrf
 
                                 <div class="row">
-
                                     <div class="col-md-4">
-                                        <input type="number" name="quantity" value="1" min="1" style="width: 100px">
+                                        <input type="number" id="quantityInput" name="quantity" value="1" min="1" style="width: 100px">
                                     </div>
 
                                     <div class="col-md-4">
-                                        <input type="submit" value="Add to Cart">
+                                        <input type="submit" value="Add to Cart" onclick="validateQuantity()">
                                     </div>
                                 </div>
-
                             </form>
+
+                            <script>
+                                function validateQuantity() {
+                                    var maxQuantity = 4; // Set your maximum quantity here
+                                    var quantityInput = document.getElementById('quantityInput');
+                                    var quantity = parseInt(quantityInput.value, 10);
+
+                                    if (quantity > maxQuantity) {
+                                        alert('Quantity cannot exceed ' + maxQuantity);
+                                        event.preventDefault(); // Prevent form submission
+                                    }
+                                }
+                            </script>
+
 
                         </div>
                     </div>

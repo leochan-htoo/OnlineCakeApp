@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\Session;
-use RealRashid\SweetAlert\Facades\Alert;
 
 use Stripe;
 use App\Models\Comment;
@@ -33,7 +32,7 @@ class HomeController extends Controller
 
 
         // can limit data product category in user viewpage "$product=Product::paginate(10);"
-        $product=Product::paginate(6);
+        $product=Product::paginate(10);
 
         $comment=comment::orderby('id','desc')->get();
 
@@ -79,7 +78,7 @@ class HomeController extends Controller
                 $totalQuantity = Cart::where('user_id', $userId)->count();
 
                 // Use the same product of home.userpage to view product
-                $product = Product::paginate(6);
+                $product = Product::paginate(10);
                 // use this for comment defined
                 $comment=comment::orderby('id','desc')->get();
                 $reply=reply::all();
@@ -98,82 +97,98 @@ class HomeController extends Controller
     }
     // add this route function to add product in the cart
     public function add_cart(Request $request, $id)
-            {
-                if(Auth::id())
-                    {
-                        $user=Auth::user();
-                        $userid=$user->id;
-                        $product=product::find($id);
+    {
+        if (Auth::id()) {
+            $user = Auth::user();
+            $userid = $user->id;
+            $product = Product::find($id);
 
-                        $product_exist_id=cart::where('product_id','=',$id)->where('user_id', '=',  $userid)->get('id')->first();
-
-                        if($product_exist_id)
-                            {
-                                $cart=cart::find($product_exist_id)->first();
-
-                                $quatity=$cart->quantity;
-
-                                $cart->quantity=$quatity + $request->quantity;
-
-                                    if($product->dis_price!=null)
-                                        {
-                                            //add this "* $request->quantity" conditional statement that calculates the price of a product
-                                            $cart->price=$product->discount_price * $cart->quantity;
-                                        }
-                                    else
-                                        {
-                                            //add this "* $request->quantity" conditional statement that calculates the price of a product
-                                            $cart->price=$product->price * $cart->quantity;
-                                        }
-
-                                $cart->save();
-
-                                return redirect()->back()->with('message','Product Added Successfully');
-
-                            }
-
-                        else
-                            {
-                                $cart=new cart;
-                                $cart->name=$user->name;
-                                $cart->email=$user->email;
-                                $cart->phone=$user->phone;
-                                $cart->address=$user->address;
-                                $cart->user_id=$user->id;
-
-                                $cart->Product_title=$product->title;
-
-                                if($product->dis_price!=null)
-                                    {
-                                        //add this "* $request->quantity" conditional statement that calculates the price of a product
-                                        $cart->price=$product->discount_price * $request->quantity;
-                                    }
-                                else
-                                    {
-                                        //add this "* $request->quantity" conditional statement that calculates the price of a product
-                                        $cart->price=$product->price * $request->quantity;
-                                    }
-
-                                        $cart->image=$product->image;
-                                        $cart->Product_id=$product->id;
-
-                                        $cart->quantity=$request->quantity;
-
-                                        $cart->save();
-
-                                        return redirect()->back()->with('message','Product Added Successfully');
-                            }
-
-
-
-
-
-                    }
-                else
-                    {
-                        return redirect('login');
-                    }
+            // Check if the product exists
+            if (!$product) {
+                return redirect()->back()->with('message', 'Product not found');
             }
+
+            // Check if the product quantity is zero
+            if ($product->quantity === 0) {
+                return redirect()->back()->with('message', 'Product is out of stock');
+            }
+
+            // Check if the requested quantity is zero
+            $requestedQuantity = $request->quantity;
+            if ($requestedQuantity <= 0) {
+                return redirect()->back()->with('message', 'Invalid quantity');
+            }
+
+            $product_exist_id = Cart::where('product_id', '=', $id)->where('user_id', '=', $userid)->first();
+
+            if ($product_exist_id) {
+                $cart = Cart::find($product_exist_id->id);
+
+                // Check if adding the requested quantity exceeds the available quantity
+                $newQuantity = $cart->quantity + $requestedQuantity;
+
+
+                $cart->quantity = $newQuantity;
+
+                if ($product->dis_price != null) {
+                    $cart->price = $product->discount_price * $newQuantity;
+                } else {
+                    $cart->price = $product->price * $newQuantity;
+                }
+
+                $cart->save();
+
+                // Assuming you have a method to decrease the product quantity in your database
+                $this->decreaseProductQuantity($product, $requestedQuantity);
+
+                return redirect()->back()->with('message', 'Product Added Successfully');
+            } else {
+                $cart = new Cart;
+                $cart->name = $user->name;
+                $cart->email = $user->email;
+                $cart->phone = $user->phone;
+                $cart->address = $user->address;
+                $cart->user_id = $user->id;
+
+                $cart->Product_title = $product->title;
+
+                // Check if the requested quantity exceeds the available quantity
+                if ($requestedQuantity > $product->quantity) {
+                    return redirect()->back()->with('error', 'Quantity exceeds available stock');
+                }
+
+                if ($product->dis_price != null) {
+                    $cart->price = $product->discount_price * $requestedQuantity;
+                } else {
+                    $cart->price = $product->price * $requestedQuantity;
+                }
+
+                $cart->image = $product->image;
+                $cart->Product_id = $product->id;
+
+                $cart->quantity = $requestedQuantity;
+
+                $cart->save();
+
+                // Assuming you have a method to decrease the product quantity in your database
+                $this->decreaseProductQuantity($product, $requestedQuantity);
+
+                return redirect()->back()->with('message', 'Product Added Successfully');
+            }
+        } else {
+            return redirect('login');
+        }
+    }
+
+    // Add this method to decrease the product quantity in the database
+    private function decreaseProductQuantity($product, $quantity)
+    {
+        // Your logic to decrease the product quantity in the database goes here
+        // For example, you can decrement the 'quantity' column in the 'products' table
+        $product->quantity -= $quantity;
+        $product->save();
+    }
+
     //this function will show cart notification sign after user add card
     //use this logic function "$id=Auth::user()->id;" makesure to know user
     //authticate user add cart after login
@@ -187,7 +202,7 @@ class HomeController extends Controller
             $totalQuantity = Cart::where('user_id', $userId)->count();
 
 
-                $id=Auth::user()->id;
+            $id=Auth::user()->id;
             $cart=cart::where('user_id','=',$id)->get();
             return view('home.showcart', compact('cart', 'totalQuantity'));
         }
@@ -259,7 +274,6 @@ public function stripePost(Request $request, $totalprice)
     // stripe_secret API key is set up in env
     \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-
     \Stripe\Charge::create([
         "amount" => $totalprice * 100,
         "currency" => "thb",
@@ -302,7 +316,7 @@ public function stripePost(Request $request, $totalprice)
         // This function logic is for view product for user
         public function product()
             {
-                $product=Product::paginate(6);
+                $product=Product::paginate(10);
 
                 $userId = Auth::user()->id;
 

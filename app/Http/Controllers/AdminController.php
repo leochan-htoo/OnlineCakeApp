@@ -9,8 +9,16 @@ use App\Models\Category;
 use App\Models\Product;
 
 use App\Models\Order;
-
+use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Validation\Rule;
+
+use Illuminate\Pagination\LengthAwarePaginator;
+
+use Illuminate\Support\Facades\Input;
 
 
 use PDF;
@@ -19,37 +27,109 @@ class AdminController extends Controller
 
 {
     // this code function is for view product catagory for admin catagory
-    public function view_catagory()
-        {
-            if(Auth::id())
-            {
-                $data=category::all();
-                return view('admin.category',compact("data"));
+    public function view_catagory(Request $request)
+    {
+        if (Auth::id()) {
+            if ($request->isMethod('post')) {
+                // Validation rules
+                $rules = [
+                    'category_name' => [
+                        'required',
+                        Rule::unique('categories', 'name')->ignore($request->category_id)->whereNull('deleted_at')
+                    ],
+                ];
+
+                // Custom error messages
+                $messages = [
+                    'category_name.required' => 'Category name is required.',
+                    'category_name.unique' => 'Category name already exists.',
+                ];
+
+                // Validate the request data
+                $validator = Validator::make($request->all(), $rules, $messages);
+
+                // Check if validation fails
+                if ($validator->fails()) {
+                    return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+
+                // If validation passes, create/update the category
+                $category = \App\Models\Category::find($request->category_id);
+                if (!$category) {
+                    $category = new \App\Models\Category;
+                }
+                $category->name = $request->input('category_name');
+                $category->save();
+
+                return redirect()->route('admin.category')->with('success', 'Category added/updated successfully.');
             }
-            else{
-                return redirect('login');
-            }
 
-
-
+            // If it's a GET request, just retrieve and show the categories
+            $data = \App\Models\Category::all();
+            return view('admin.category', compact('data'));
+        } else {
+            return redirect('login');
         }
+    }
     // this code function is for add product catagory for admin catagory
-    public function add_catagory(Request $request)
-        {
-            $data=new category;
+        public function add_catagory(Request $request)
+    {
+        // Validation rules
+        $rules = [
+            'category' => 'required|unique:categories,category_name',
+        ];
 
-            $data->category_name=$request->category;
+        // Custom error messages
+        $messages = [
+            'category.required' => 'Category name is required.',
+            'category.unique' => 'Category name already exists.',
+        ];
 
-            $data->save();
-            return redirect()->back()->with('message','Category Added Successfully');
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
+
+        // If validation passes, create the category
+        $category = new Category;
+        $category->category_name = $request->category;
+        $category->save();
+
+        return redirect()->back()->with('message', 'Category Added Successfully');
+    }
+
     // this code function is for delete action for admin catagory
-    public function delete_catagory($id)
-        {
-            $data=category::find($id);
-            $data->delete();
-            return redirect()->back()->with('message','Catagory Deleted Successfully');
+    public function delete_category($id)
+    {
+        // Find the category by ID
+        $category = Category::find($id);
+
+        // Check if the category exists
+        if ($category) {
+            // Find products with the given category title
+            $products = Product::where('category', $category->category_name)->get();
+
+            // Delete each product
+            foreach ($products as $product) {
+                $product->delete();
+            }
+
+            // Delete the category
+            $category->delete();
+
+            return redirect()->back()->with('message', 'Category Deleted Successfully');
         }
+
+        // Handle the case where the category is not found
+        return redirect()->back()->with('message', 'Category not found');
+    }
 
     // this code function logic is for view product
     public function view_product()
@@ -85,8 +165,8 @@ class AdminController extends Controller
     // create this controller function logic for show product in admin
     public function show_product()
         {
-            $product=product::all();
-        return view('admin.show_product', compact('product'));
+            $products = Product::paginate(4);
+        return view('admin.show_product', compact('products'));
         }
 
      // create this controller function logic for delete product id in database
@@ -141,11 +221,13 @@ class AdminController extends Controller
 
 
         }
-    public function order()
+        public function order()
         {
-        $order=order::all();
-            return view('admin.order',compact('order'));
+            // Use paginate() to get a paginated result
+            $orders = Order::paginate(5);
+            return view('admin.order', compact('orders'));
         }
+
     //create this controller function logic for delivered
     public function delivered($id)
         {
@@ -168,13 +250,69 @@ class AdminController extends Controller
         }
 
     //create this controller function logic for search product data
-    public function searchdata(Request $request)
+            public function searchdata(Request $request)
+            {
+            $searchText = $request->search;
+
+            // Get the collection
+            $collection = Order::where('name', 'LIKE', '%' . $searchText . '%')
+                ->orWhere('phone', 'LIKE', '%' . $searchText . '%')
+                ->orWhere('product_title', 'LIKE', '%' . $searchText . '%')
+                ->get();
+
+            // Define how many items we want to be visible in each page
+            $perPage = 4;
+
+            // Slice the collection to get the items to display in current page
+            $currentPageItems = $collection->slice(($request->page - 1) * $perPage, $perPage)->all();
+
+            // Create our paginator and pass it to the view
+            $paginatedItems = new LengthAwarePaginator($currentPageItems , count($collection), $perPage);
+
+            // set url path for generated links
+            $paginatedItems->setPath($request->url());
+
+            return view('admin.order', ['orders' => $paginatedItems, 'product' => $paginatedItems]);
+            }
+        public function searchproduct(Request $request)
         {
             $searchText = $request->search;
-            $order = Order::where('name', 'LIKE', '%' . $searchText . '%')->orWhere('phone', 'LIKE', '%' . $searchText . '%')
-            ->orWhere('product_title', 'LIKE', '%' . $searchText . '%')->get();
+            $searchCategory = $request->category;
 
-            return view('admin.order', compact('order'));
+            // Build the query
+            $query = Product::query();
+
+            if ($searchText) {
+                $query->where('title', 'LIKE', '%' . $searchText . '%');
+            }
+
+            if ($searchCategory) {
+                $query->where('category', 'LIKE', '%' . $searchCategory . '%');
+            }
+
+            // Retrieve the collection
+            $collection = $query->get();
+
+            // Define how many items we want to be visible in each page
+            $perPage = 4;
+
+            // The current page is determined by the request 'page' parameter
+            $currentPage = $request->input('page', 1);
+
+            // Calculate the offset
+            $offset = ($currentPage - 1) * $perPage;
+
+            // Slice the collection to get the items to display in the current page
+            $currentPageItems = $collection->slice($offset, $perPage)->all();
+
+            // Create our paginator and pass it to the view
+            $paginatedItems = new LengthAwarePaginator($currentPageItems, count($collection), $perPage, $currentPage, [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]);
+
+            return view('admin.show_product', ['products' => $paginatedItems]);
         }
+
 
 }
