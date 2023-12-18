@@ -71,7 +71,7 @@
                     <th style="padding: 5px; border: 1px solid #999;">Print PDF</th>
                     </tr>
 
-                    @forelse ($order as $order)
+                    @forelse ($orders as $order)
                         <tr style="border: 1px solid #999;">
                             <td style="padding: 5px; border: 1px solid #999;">{{ $order->name }}</td>
                             <td style="padding: 5px; border: 1px solid #999;">{{ $order->email }}</td>
@@ -107,6 +107,8 @@
                     @endforelse
 
                 </table>
+                <br>
+                {{ $orders->links('pagination::bootstrap-5') }}
             </div>
         </div>
     <!-- container-scroller -->
