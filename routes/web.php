@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
-use GuzzleHttp\Middleware;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,9 @@ Route::middleware([
 });
 
 // add this route for view redirect admin panel dashboard in admin
-route::get('/redirect', [HomeController::class,'redirect'])->middleware('auth','verified');
+route::get('/redirect', [HomeController::class,'redirect'])->middleware('auth', 'verified');
+
+// route::get('/productview', [HomeController::class,'productview']);
 
 
 //**************************** Admin panel AdminController**********************************// -
@@ -40,7 +42,7 @@ route::get('/view_catagory', [AdminController::class,'view_catagory']);
 route::post('/add_catagory', [AdminController::class,'add_catagory']);
 
 // add this route for delete product in admin
-route::get('/delete_catagory/{id}', [AdminController::class,'delete_catagory']);
+route::get('/delete_category/{id}', [AdminController::class,'delete_category']);
 
 // add this route for view product in admin
 route::get('/view_product', [AdminController::class,'view_product']);
@@ -72,6 +74,11 @@ route::get('/print_pdf/{id}', [AdminController::class,'print_pdf']);
 
 // add this route for search product data in admin panel
 route::get('/search', [AdminController::class,'searchdata']);
+
+// product search
+route::get('/searchproduct', [AdminController::class,'searchproduct']);
+
+route::get('/searchcategory', [AdminController::class,'searchcategory']);
 
 
 
@@ -123,10 +130,7 @@ route::post('/add_reply',[HomeController::class,'add_reply']);
 route::get('/product_search',[HomeController::class,'product_search']);
 
 // add this to show user how many product
-Route::middleware('auth')->group(function () {
-
-    route::get('/products',[HomeController::class,'product']);
-});
+route::get('/products',[HomeController::class,'product']);
 
 route::get('/search_product',[HomeController::class,'search_product']);
 
